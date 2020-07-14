@@ -600,3 +600,37 @@ message Section {
   required Token xmlTag             = 9;
 }
 
+
+
+// A message for requesting a semgrex
+// Each sentence stores information about the tokens making up the
+// corresponding graph
+message SemgrexRequest {
+  message SemgrexQuery {
+    repeated Token           token   = 1;
+    required DependencyGraph graph   = 2;
+  }
+
+  required string          semgrex   = 1;
+  repeated SemgrexQuery    query     = 2;
+}
+
+// The response from running a semgrex
+message SemgrexResponse {
+  message NamedNode {
+    required string    name  = 1;
+    required int32     index = 2;
+  }
+
+  message Match {
+    required int32     index = 1;
+    repeated NamedNode named = 2;
+  }
+
+  message Result {
+    repeated Match     match = 1;
+  }
+
+  repeated Result result = 1;
+}
+
